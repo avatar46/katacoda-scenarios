@@ -1,0 +1,27 @@
+{
+    "title": "Try Ansible",
+    "description": "A simple attempt.",
+    "difficulty": "Beginner",
+    "time": "3 minutes",
+    "details": {
+      "steps": [
+        {
+          "title": "Step 1",
+          "text": "step1.md"
+        }
+      ],
+      "intro": {
+        "text": "intro.md",
+        "course-data": "env-init.sh"
+      },
+      "finish": {
+        "text": "finish.md"
+      }
+    },
+    "environment": {
+      "uilayout": "terminal"
+    },
+    "backend": {
+      "imageid": "ubuntu:2004"
+    }
+  }
