@@ -1,0 +1,89 @@
+---
+- name: Setup MERN stack
+  hosts: localhost
+  tasks:
+    # create seperate play with prerequisites
+    - name: Install git 
+      apt: 
+        name: git
+
+    - name: Install Docker-py
+      pip:
+        name: docker-py
+
+    # # creates network 173.18.0.0/28
+    # # gateway 173.18.0.1
+    - name: Create docker network
+      docker_network:
+        name: mynetwork
+        ipam_config:
+          - subnet: 173.18.0.0/28
+
+    # # create seperate play to create mongo container
+    - name: Create Mongo Container
+      docker_container:
+        name: MongoDB
+        image: mongo
+        networks: 
+          - name: mynetwork
+            ipv4_address: 173.18.0.2
+
+    # # might have to control the container afterwards again
+    - name: Add mongo container to inventory
+      add_host:
+        name: MongoDB
+        ansible_connection: docker
+         
+    # create seperate play to create node container
+    - name: Clone node-express-mongo repository
+      git:
+       repo: https://github.com/nikolim/node-express-mongo.git
+       dest: ~/node-express-mongo-example
+       clone: yes
+       update: yes
+    
+    - name: Build node container 
+      shell: "(cd ~/node-express-mongo-example && docker build -t node .)"
+
+    - name: Run node docker container
+      docker_container:
+        name: Node
+        image: node
+        networks:
+          - name: mynetwork
+            ipv4_address: 173.18.0.3
+          
+    # # might have to control the container afterwards again
+    - name: Add node container to inventory
+      add_host:
+        name: Node
+        ansible_connection: docker
+
+    # # # create seperate play to create node container
+    - name: Clone react-frontend repository
+      git:
+       repo: https://github.com/nikolim/minimal-react
+       dest: ~/react-frontend
+       clone: yes
+       update: yes
+    
+    - name: Build react container 
+      shell: "(cd ~/react-frontend && docker build -t react .)"
+
+    - name: Run react docker container
+      docker_container:
+        name: React
+        image: react
+        ports: 
+          - 3000:3000
+        networks:
+          - name: mynetwork
+            ipv4_address: 173.18.0.4
+       
+    # # might have to control the container afterwards again
+    - name: Add react container to inventory
+      add_host:
+        name: React
+        ansible_connection: docker
+
+    # open port 3000 on host 1 to see the webapp
