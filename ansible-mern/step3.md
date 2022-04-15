@@ -4,16 +4,17 @@ We are going to use Docker to build MERN. Docker provides lightweight containers
 
 Our machine has already installed Docker. But before starting with the real work, we need to use Ansible making some preparations.
 
-First create a directory **tasks**, where all playbooks will be stored:\
+First create a directory **tasks**, where all playbooks will be stored:
 `mkdir tasks && cd tasks`{{execute HOST1}}
 
-Create a new playbook **prerequisites.yml** and open it:\
-`touch prerequistes.yml`{{execute HOST1}}
-`prerequistes.yml`{{open}}
+Create a new playbook **prerequisites.yml** and open it:
+`touch prerequisites.yml`{{execute HOST1}}
+
+`prerequisites.yml`{{open}}
 
 ## Install Git and Docker-py
 
-The first task we are going to write in playbook **prerequisites.yml** is installing Git.\
+The first task we are going to write in playbook **prerequisites.yml** is installing Git.
 Copy the following YAML to **prerequisites.yml**:
 
 <pre class="file" data-filename="prerequisites.yml" data-target="replace">---
@@ -25,7 +26,8 @@ Copy the following YAML to **prerequisites.yml**:
         name: git
 </pre>
 
-Then install docker-py, a Python library for the Docker Remote API. It does everything the docker command does, but from within Python – run containers, manage them, pull/push images, etc.\
+Then install docker-py, a Python library for the Docker Remote API. It does everything the docker command does, but from within Python – run containers, manage them, pull/push images, etc.
+
 Copy the following YAML to **prerequisites.yml**:
 
 <pre class="file" data-filename="prerequisites.yml" data-target="append">
@@ -37,7 +39,8 @@ Copy the following YAML to **prerequisites.yml**:
 
 ## Create docker network
 
-As the MERN stack will be deployed on mutiple containers, a network need to be established among containers for data transmission. Our next task is to create a docker network for containers.\
+As the MERN stack will be deployed on mutiple containers, a network need to be established among containers for data transmission. Our next task is to create a docker network for containers.
+
 Copy the following YAML to **prerequisites.yml**:
 
 <pre class="file" data-filename="prerequisites.yml" data-target="append">

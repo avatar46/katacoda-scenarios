@@ -1,4 +1,5 @@
-To start, we first create a new playbook **mangodb.yml** for this task, and open it:\
+To start, we first create a new playbook **mangodb.yml** for this task, and open it:
+
 `touch mangodb.yml`{{execute HOST1}}
 `mangdb.yml`{{open}}
 
@@ -27,7 +28,8 @@ We connected the container to the docker network with a fixed ip and expose port
 
 ## Test the database
 
-Now lets test whether our MangDB is actually created and running.\
+Now lets test whether our MangDB is actually created and running.
+
 Copy the following YAML to **mangodb.yml**:
 
 <pre class="file" data-filename="mangodb.yml" data-target="replace">
